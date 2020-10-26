@@ -3,3 +3,5 @@
 
 # ลิ้ง colab ใหม่
 # https://colab.research.google.com/drive/1f-GZjkCkGZP1l-rS-SjRB0rbfg_Dy5D2?usp=sharing
+# plugin สำหรับ kbide
+# https://github.com/cmmakerclub/kbide-plugin-AI_CAR_Driver
