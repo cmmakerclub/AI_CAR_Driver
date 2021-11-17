@@ -11,7 +11,7 @@ PINOut
 <p>
 
 
-<img src="images/image1.png" width="" alt="alt_text" title="image_tooltip">
+<img src="images/image8.png" width="" alt="alt_text" title="image_tooltip">
 
 </p>
 <p>
