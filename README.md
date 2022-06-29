@@ -120,3 +120,9 @@ def setname_bl(_num = 0):  # ฟังชั้นเปลียนซื่อ
 # https://colab.research.google.com/drive/1f-GZjkCkGZP1l-rS-SjRB0rbfg_Dy5D2?usp=sharing
 # plugin สำหรับ kbide
 # https://github.com/cmmakerclub/kbide-plugin-AI_CAR_Driver
+
+# ถ้าเป็น jetson nano หรือ raspberry ต้องลง I2C ให้เรียบร้อยด้วย(เรียงตามลำดับ)
+# sudo pip3 install Jetson.GPIO
+# sudo pip3 install Adafruit-Blinka==4.5.0
+# sudo pip3 install adafruit-circuitpython-busdevice==5.1.0
+# sudo pip3 install Adafruit-PlatformDetect==2.6.0
