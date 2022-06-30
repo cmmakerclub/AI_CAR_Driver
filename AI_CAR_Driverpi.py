@@ -4,9 +4,9 @@ import struct
 from adafruit_bus_device.i2c_device import I2CDevice
 import math
 
-class Mecanum():
+class CAR_Driver():
 
-    DEVICE_ADDRESS = 0x55
+    DEVICE_ADDRESS = 0x12
     comm_port = busio.I2C(board.SCL, board.SDA)
     bus_device = I2CDevice(comm_port, DEVICE_ADDRESS)
 
@@ -28,7 +28,7 @@ class Mecanum():
     def buzzer(self,timelong = 0):  #ฟังชั้นเปิดเสียง ตัวเลข 1 = 50mS  หรือ 2 = 100mS
         if timelong >= 255 :
             timelong = 255
-        a = self.i2c.writeto(self.address,bytes([int(timelong)]))
+        a = self.bus_device.write(bytes([int(timelong)]))
         return a
 
     def servomotor(self,M2=0,M3=0,M4=0):  # ฟังชั้นขับโซโวมอเตอร์  มี 4 ช่อง M1,M2,M3,M4 ค่า 0-255 map 1000-2000 uS
@@ -57,5 +57,5 @@ class Mecanum():
         return a
     def resdData(self):
         result = bytearray(3)
-        self.i2c.readinto(result)
+        self.bus_device.readinto(result)
         return result
