@@ -5,9 +5,7 @@ import math
 class CAR_Driver():
 
     DEVICE_ADDRESS = 0x12
-    comm_port = busio.I2C(board.SCL, board.SDA)
-    bus_device = I2CDevice(comm_port, DEVICE_ADDRESS)
-
+    bus_device = smbus.SMBus(1) 
 #     def value_limit(self, _value=0.0, min=-30000.0, max=30000.0):
 #         if _value < min :
 #             _value = min
@@ -26,7 +24,7 @@ class CAR_Driver():
     def buzzer(self,timelong = 0):  #ฟังชั้นเปิดเสียง ตัวเลข 1 = 50mS  หรือ 2 = 100mS
         if timelong >= 255 :
             timelong = 255
-        a = self.bus_device.write(bytes([int(timelong)]))
+        a = self.bus_device.write_byte(self.DEVICE_ADDRESS,timelong)
         return a
 
     def servomotor(self,M2=0,M3=0,M4=0):  # ฟังชั้นขับโซโวมอเตอร์  มี 4 ช่อง M1,M2,M3,M4 ค่า 0-255 map 1000-2000 uS
@@ -36,7 +34,7 @@ class CAR_Driver():
             M3 = 255
         if M4 >= 255 :
             M4 = 255
-        a = self.bus_device.write(bytes([int(0),int(M2),int(M3),int(M4)]))
+        a = self.bus_device.write_i2c_block_data(self.DEVICE_ADDRESS,int(0),[int(M2),int(M3),int(M4)])
         return a
     def carmotor(self,FB = 128,LR = 128):  # ฟังชั้น FB คือ เดินหน้า ถอยหลัง   LR คือ  เลี้ยวซ้าย ขวา
     #     if FB >= 255 :
@@ -44,16 +42,15 @@ class CAR_Driver():
     #     if LR >= 255 :
     #         LR = 255
 
-        a = self.bus_device.write(bytes([int(FB),int(LR),int(0)]))
+        a = self.bus_device.write_i2c_block_data(self.DEVICE_ADDRESS,int(FB),[int(LR),int(0)])
         return a
     def setname_bl(self,_num = 0):  # ฟังชั้นเปลียนซื่อ Blใส่ได้แต่ตัวเลขเท่านั้น
     #     if _num >= ุ60000 :
     #         _num = 60000
-        _namenum = struct.pack(">H", _num)
-        a = self.bus_device.write(_namenum)
+        _namenum = list(struct.pack(">H", _num))
+        a = self.bus_device.write_i2c_block_data(self.DEVICE_ADDRESS,_namenum[0],_namenum[1])
         print(_namenum)
         return a
     def resdData(self):
-        result = bytearray(3)
-        self.bus_device.readinto(result)
+        result = self.bus_device.read_i2c_block_data(self.DEVICE_ADDRESS, 0, 3)
         return result
